@@ -10,7 +10,7 @@ seed = 2
 rdm = np.random.RandomState(seed)
 X = rdm.randn(300,2)
 #判断条件
-Y_ = [int(x0*x1 + x1*x1 <2) for (x0,x1) in X]
+Y_ = [int(x0*x0 + x1*x1 <2) for (x0,x1) in X]
 #遍历数据贴标签
 Y_c = [['red' if y else 'blue'] for y in Y_]
 #整理数据集和标签
@@ -23,8 +23,8 @@ print(Y_c)
 
 #plt画图
 
-#plt.scatter(X[:,0], X[:,1], c=np.squeeze(Y_c))
-#plt.show()
+plt.scatter(X[:,0], X[:,1], c=np.squeeze(Y_c))
+plt.show()
 
 #定义神经网络的输入、参数和输出，定义前向传播过程
 def get_weight(shape, regularizer):
@@ -57,7 +57,7 @@ train_step = tf.train.AdamOptimizer(0.0001).minimize(loss_mse)
 with tf.Session() as sess:
 	init_op = tf.global_variables_initializer()
 	sess.run(init_op)
-	STEPS = 10000
+	STEPS = 100000
 	for i in range(STEPS):
 		start = (i*BATCH_SIZE) % 300
 		end = start + BATCH_SIZE
@@ -79,9 +79,9 @@ with tf.Session() as sess:
 	print("w2:\n",sess.run(w2))
 
 #画图
-#plt.scatter(X[:,0], X[:,1], c=np.squeeze(Y_c))
-#plt.contour(xx, yy, probs, levels=[.5])
-#plt.show()
+plt.scatter(X[:,0], X[:,1], c=np.squeeze(Y_c))
+plt.contour(xx, yy, probs, levels=[.5])
+plt.show()
 
 #定义反向传播
 train_step = tf.train.AdamOptimizer(0.0001).minimize(loss_total)
@@ -89,7 +89,7 @@ train_step = tf.train.AdamOptimizer(0.0001).minimize(loss_total)
 with tf.Session() as sess:
 	init_op = tf.global_variables_initializer()
 	sess.run(init_op)
-	STEPS = 10000
+	STEPS = 100000
 	for i in range(STEPS):
 		start = (i*BATCH_SIZE) %300
 		end = start + BATCH_SIZE 
@@ -111,6 +111,6 @@ with tf.Session() as sess:
 	print("w2:\n",sess.run(w2))	
 	print("b2:\n",sess.run(b2))
 #画图
-#plt.scatter(X[:,0], X[:,1], c=np.squeeze(Y_c))
-#plt.contour(xx, yy, probs, levels=[.5])
-#plt.show()
+plt.scatter(X[:,0], X[:,1], c=np.squeeze(Y_c))
+plt.contour(xx, yy, probs, levels=[.5])
+plt.show()
