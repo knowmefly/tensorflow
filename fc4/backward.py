@@ -76,8 +76,8 @@ def backward(mnist):
 		coord.request_stop()#7
 		coord.join(threads)#8
 def main():
-	mnist = input_data.read_data_sets("./data/", one_hot=True)
-	backward(mnist)
+	# mnist = input_data.read_data_sets("./data/", one_hot=True)
+	backward()#9
 
 if __name__ == '__main__':
-	main()
+	main() 

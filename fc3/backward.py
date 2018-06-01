@@ -52,7 +52,10 @@ def backward(mnist):
 		init_op = tf.global_variables_initializer()
 		sess.run(init_op)
 		# tf.initialize_all_variables().run()
-		#ckpt = tf.train.get_checkpoint_state(MODEL_SAVE_PATH)
+		ckpt = tf.train.get_checkpoint_state(MODEL_SAVE_PATH)
+		if ckpt and ckpt.model_checkpoint_path:
+			saver.restore(sess, ckpt.model_checkpoint_path)
+			
 		#global_step = ckpt.model_checkpoint_path.split('/')[-1].split('-')[-1]
 		#训练模型
 		for i in range(STEPS):			

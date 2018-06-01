@@ -13,7 +13,7 @@ win_unicode_console.enable()
 TEST_INTERVAL_SECS = 5
 REGULARIZER = 0.0001
 TEST_NUM = 10000#1 
-def test(mnist):
+def test():
 	with tf.Graph().as_default() as g:
 		#x y_占位
 		x = tf.placeholder(tf.float32, [None, forward.INPUT_NODE])
@@ -30,7 +30,7 @@ def test(mnist):
 		correct_prediction = tf.equal(tf.argmax(y,1),tf.argmax(y_,1))
 		accuracy = tf.reduce_mean(tf.cast(correct_prediction,tf.float32))
 
-		img_batch, label_batch = generateds.get_tfrecord(BATCH_SIZE, isTrain=False)#2
+		img_batch, label_batch = generateds.get_tfrecord(TEST_NUM, isTrain=False)#2
 		while True:
 			with tf.Session() as sess:
 				#加载训练好的模型
@@ -51,7 +51,7 @@ def test(mnist):
 					print("After %s training step(s), test accuracy = %g" %(global_step, accuracy_score))
 					
 					coord.request_stop()#6
-					coord.join(threads)
+					coord.join(threads)#7
 				#如果没有模型
 				else:
 					print('No checkpoint file found') #模型不存在
@@ -59,9 +59,9 @@ def test(mnist):
 				time.sleep(TEST_INTERVAL_SECS)
 def main():
 	#加载测试数据集
-	mnist = input_data.read_data_sets("./data/", one_hot=True)
+	# mnist = input_data.read_data_sets("./data/", one_hot=True)
 	#调用test（）函数
-	test(mnist)
+	test()#8
 
 if __name__=='__main__':
 	main()

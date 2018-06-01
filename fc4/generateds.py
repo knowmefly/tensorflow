@@ -1,7 +1,19 @@
 #coding:utf-8
 
 import tensorflow as tf
+import numpy as np
+from PIL import Image
+import os
 
+image_train_path='./mnist_data_jpg/mnist_train_jpg_60000/'
+label_train_path='./mnist_data_jpg/mnist_train_jpg_60000.txt'
+tfRecord_train='./data/mnist__train.tfrecords'
+image_test_path='./mnist_data_jpg/mnist_test_jpg_10000'
+label_test_path='./mnist_data_jpg/mnist_test_jpg_10000.txt'
+tfRecord_test='./data/mnist_test_tfrecords'
+data_path='./data'
+resize_height = 28
+resize_width = 28
 
 def write_tfRecord(tfRecordName, image_path, label_path):
 	writer = tf.python_io.TFRecordWriter(tfRecordName)
@@ -50,19 +62,19 @@ def read_tfRecord(tfRecord_path):
 	img = tf.decode_raw(features['img_raw'], tf.uint8)
 	img.set_shape([784])
 	img = tf.cast(img, tf.float32) * (1./255)
-	lable = tf.cast(features['label'], tf.float32)
-	return img, lable
+	label = tf.cast(features['label'], tf.float32)
+	return img, label 
 
 def get_tfrecord(num, isTrain=True):
 	if isTrain:
 		tfRecord_path = tfRecord_train
 	else:
 		tfRecord_path = tfRecord_test
-	img, lable = read_tfRecord(tfRecord_path)
-	img_batch, lable_batch = tf.train.shuffle_batch(
+	img, label = read_tfRecord(tfRecord_path)
+	img_batch, label_batch = tf.train.shuffle_batch(
 		[img, label],
 		batch_size = num,
-		mun_threads = 2,
+		num_threads = 2,
 		capacity = 1000,
 		min_after_dequeue =700
 		)
