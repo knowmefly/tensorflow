@@ -52,18 +52,6 @@ def restore_model(testPicArr):
 				print("No checkpoint file found")
 				return -1
 
-# def application():
-# 	# c1 = int(input("raw_input_exp: "))  
-# 	# print("输入值为：%s" %c1)
-# 	testNum = input("input the number of test pictures:")
-# 	testNum = int(testNum)
-# 	# print(testNum,type(testNum))
-# 	for i in range(testNum):
-# 		testPic = input("the path of test picture:")
-# 		testPicArr = pre_pic(testPic)
-# 		preValue = restore_model(testPicArr)
-# 		print ("The prediction number is:%d", preValue)
-
 def application():
 	testNum = int(input("input the number of test pictures:"))
 	for i in range(testNum):

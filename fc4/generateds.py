@@ -8,13 +8,14 @@ import os
 image_train_path='./mnist_data_jpg/mnist_train_jpg_60000/'
 label_train_path='./mnist_data_jpg/mnist_train_jpg_60000.txt'
 tfRecord_train='./data/mnist__train.tfrecords'
-image_test_path='./mnist_data_jpg/mnist_test_jpg_10000'
+image_test_path='./mnist_data_jpg/mnist_test_jpg_10000/'
 label_test_path='./mnist_data_jpg/mnist_test_jpg_10000.txt'
 tfRecord_test='./data/mnist_test_tfrecords'
 data_path='./data'
 resize_height = 28
 resize_width = 28
 
+#读写文件
 def write_tfRecord(tfRecordName, image_path, label_path):
 	writer = tf.python_io.TFRecordWriter(tfRecordName)
 	num_pic = 0
@@ -23,35 +24,34 @@ def write_tfRecord(tfRecordName, image_path, label_path):
 	f.close()
 	for content in contents:
 		value = content.split()
-		image_path = image_path + value[0]
+		img_path = image_path + value[0]
 		img = Image.open(img_path)
 		img_raw = img.tobytes()
 		labels = [0] * 10
 		labels[int(value[1])] = 1
 
-		example = tf.train.Example(features=tf.train.Features(Feature={
-			'img_raw': tf.train.Feature(bytes_list=tf.train.BytesList(value=[img_raw])),
-			'label': tf.train.Feature(int64_list=tf.train.Int64List(value=labels))
-			}))
-		writer.write(example.SerializerToString())
+		example = tf.train.Example(features=tf.train.Features(feature={
+				'img_raw': tf.train.Feature(bytes_list=tf.train.BytesList(value=[img_raw])),
+				'label': tf.train.Feature(int64_list=tf.train.Int64List(value=labels))
+				}))
+		writer.write(example.SerializeToString())
 		num_pic += 1
 		print("the number of picture:", num_pic)
 	writer.close()
 	print("write tfrecord successful")
-
+#生成数据集
 def generate_tfRecord():
 	isExists = os.path.exists(data_path)
 	if not isExists:
 		os.makedirs(data_path)
 		print('the directory was created successfully')
 	else:
-		pritn('directory already exists')
+		print('directory already exists')
 	write_tfRecord(tfRecord_train, image_train_path, label_train_path)
 	write_tfRecord(tfRecord_test, image_test_path, label_test_path)
-
-
+#读取数据集
 def read_tfRecord(tfRecord_path):
-	filename_queue = tf.train.string_input_producer([tfRecord_path])
+	filename_queue = tf.train.string_input_producer([tfRecord_path], shuffle=True)
 	reader = tf.TFRecordReader()
 	_, serialized_example = reader.read(filename_queue)
 	features = tf.parse_single_example(serialized_example,
@@ -64,7 +64,7 @@ def read_tfRecord(tfRecord_path):
 	img = tf.cast(img, tf.float32) * (1./255)
 	label = tf.cast(features['label'], tf.float32)
 	return img, label 
-
+#获取数据集
 def get_tfrecord(num, isTrain=True):
 	if isTrain:
 		tfRecord_path = tfRecord_train

@@ -47,7 +47,7 @@ def test():
 					xs, ys = sess.run([img_batch, label_batch])#5
 
 					#计算准确率
-					accuracy_score = sess.run(accuracy, feed_dict={x:mnist.test.images, y_:mnist.test.labels})
+					accuracy_score = sess.run(accuracy, feed_dict={x:xs, y_:ys})
 					print("After %s training step(s), test accuracy = %g" %(global_step, accuracy_score))
 					
 					coord.request_stop()#6

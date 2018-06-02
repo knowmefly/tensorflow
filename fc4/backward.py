@@ -20,7 +20,7 @@ MODEL_SAVE_PATH="./model/"
 MODEL_NAME="mnist_model"
 train_num_examples = 60000#2 mnist_train-num_examples
 
-def backward(mnist):
+def backward():
 	x = tf.placeholder(tf.float32, [None, forward.INPUT_NODE])
 	y_ = tf.placeholder(tf.float32, [None, forward.OUTPUT_NODE])
 
@@ -37,7 +37,7 @@ def backward(mnist):
 	learning_rate = tf.train.exponential_decay(
 		LEARNING_RATE_BASE,
 		global_step,
-		mnist.train.num_examples / BATCH_SIZE,
+		train_num_examples / BATCH_SIZE,
 		LEARNING_RATE_DECAY,
 		staircase=True)
 	train_step = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss, global_step=global_step)
@@ -51,7 +51,6 @@ def backward(mnist):
 	saver = tf.train.Saver()
 
 	img_batch, label_batch = generateds.get_tfrecord(BATCH_SIZE, isTrain=True)#3
-
 	with tf.Session() as sess:
 		#初始化所有模型参数
 		init_op = tf.global_variables_initializer()
