@@ -17,8 +17,8 @@ class Vgg16():
 			vgg16_path = os.path.join(os.getcwd(), "vgg16.npy")  #os.getcwd() 返回当前目录
 			self.data_dict = np.load(vgg16_path, encoding='latin1').item()  #遍历键值对，导入模型参数
 
-		for x in self.data_dict:
-			print(x)
+		#for x in self.data_dict:
+		#	print(x)
 
 	def forward(self, images):
 

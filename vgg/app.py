@@ -6,7 +6,7 @@ import vgg16
 import utils
 from Nclasses import labels
 
-img_path = raw_input('Input the path and image name:')
+img_path = input('Input the path and image name:')
 img_ready = utils.load_image(img_path)  # 调用 load_image()函数,对待测试的图像做一些预处理操作
 
 #定义一个 figure 画图窗口,并指定窗口的名称,也可以设置窗口修的大小

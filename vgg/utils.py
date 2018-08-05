@@ -21,8 +21,8 @@ def load_image(path):
 	ax0.imshow(img)  # 添加展示该图像
 
 	short_edge = min(img.shape[:2])  # 找到该图像的最短边
-	y = (img.shape[0] - short_edge) / 2
-	x = (img.shape[1] - short_edge) / 2  # 把图像的 w 和 h 分别减去最短边,并求平均
+	y = (img.shape[0] - short_edge) // 2
+	x = (img.shape[1] - short_edge) // 2  # 把图像的 w 和 h 分别减去最短边,并求平均
 	crop_img = img[y:y + short_edge, x:x + short_edge]  # 取出切分出的中心图像
 
 	ax1 = fig.add_subplot(132)  # 把下面的图像放在该画布的第二个位置
