@@ -57,7 +57,7 @@ def restore_model(testPicArr):
 # 	# print("输入值为：%s" %c1)
 # 	testNum = input("input the number of test pictures:")
 # 	testNum = int(testNum)
-# 	# print(testNum,type(testNum))
+# 	print(testNum,type(testNum))
 # 	for i in range(testNum):
 # 		testPic = input("the path of test picture:")
 # 		testPicArr = pre_pic(testPic)
