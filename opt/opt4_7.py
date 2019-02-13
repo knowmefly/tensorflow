@@ -3,6 +3,7 @@
 import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
+import time
 
 BATCH_SIZE = 30
 seed = 2
@@ -17,9 +18,9 @@ Y_c = [['red' if y else 'blue'] for y in Y_]
 X = np.vstack(X).reshape(-1,2)
 Y_ = np.vstack(Y_).reshape(-1,1)
 
-print(X)
-print(Y_)
-print(Y_c)
+#print(X)
+#print(Y_)
+#print(Y_c)
 
 #plt画图
 
@@ -54,7 +55,9 @@ loss_total = loss_mse + tf.add_n(tf.get_collection('losses'))
 #定义反向传播:不含正则
 train_step = tf.train.AdamOptimizer(0.0001).minimize(loss_mse)
 
+time_start = time.time()
 with tf.Session() as sess:
+
 	init_op = tf.global_variables_initializer()
 	sess.run(init_op)
 	STEPS = 100000
@@ -78,6 +81,8 @@ with tf.Session() as sess:
 	print("b1:\n",sess.run(b1))
 	print("w2:\n",sess.run(w2))
 
+time_end = time.time()
+print('time cost',time_end-time_start,'s')
 #画图
 plt.scatter(X[:,0], X[:,1], c=np.squeeze(Y_c))
 plt.contour(xx, yy, probs, levels=[.5])
@@ -86,6 +91,7 @@ plt.show()
 #定义反向传播
 train_step = tf.train.AdamOptimizer(0.0001).minimize(loss_total)
 
+time_start_1 = time.time()
 with tf.Session() as sess:
 	init_op = tf.global_variables_initializer()
 	sess.run(init_op)
@@ -110,6 +116,9 @@ with tf.Session() as sess:
 	print("b1:\n",sess.run(b1))
 	print("w2:\n",sess.run(w2))	
 	print("b2:\n",sess.run(b2))
+
+time_end_1 = time.time()
+print('time cost',time_end1-time_start1，'s')
 #画图
 plt.scatter(X[:,0], X[:,1], c=np.squeeze(Y_c))
 plt.contour(xx, yy, probs, levels=[.5])

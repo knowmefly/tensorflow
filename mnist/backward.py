@@ -5,8 +5,8 @@ import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 import forward
 import os
-import win_unicode_console
-win_unicode_console.enable()
+#import win_unicode_console
+#win_unicode_console.enable()
 
 
 BATCH_SIZE = 200
