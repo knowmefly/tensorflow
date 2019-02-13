@@ -107,5 +107,7 @@ myweb/pic
 */pic
 model/*
 data/*
+log/*
+logs/*
 
 *.gz
