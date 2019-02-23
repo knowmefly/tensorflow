@@ -27,12 +27,17 @@ class TextCNN(object):
 
         # Keeping track of l2 regularization loss (optional)
         l2_loss = tf.constant(0.0)
-
+        
+        with open('embeddings.pickle', 'rb') as f:
+            embeddings = pickle.load(f)
         # Embedding layer
         with tf.device('/cpu:0'), tf.name_scope("embedding"):
-            self.W = tf.Variable(
-               tf.random_uniform([vocab_size, embedding_size], -1.0, 1.0),
-               name="W")
+#             self.W = tf.Variable(
+#                tf.random_uniform([vocab_size, embedding_size], -1.0, 1.0),
+#                name="W")
+
+            #用自己定义的词向量结构进行初始化
+            self.W = tf.Variable(embeddings, name='W')
             # [batch_size, sequence_length, embedding_size]
             self.embedded_chars = tf.nn.embedding_lookup(self.W, self.input_x)
             # 添加一个维度，[batch_size, sequence_length, embedding_size, 1]
