@@ -1,9 +1,9 @@
 # tensorflow
-## 1. 简单学习
+## 1.简单学习
 * 《人工智能实战》--北京大学 https://www.icourse163.org/course/PKU-1002536002?tid=1002700003
 ### 最基础的一些语法 对卷积神经网络的初始了解 最后能达到使用VGG19做简单图片做分类
 
-## 1. example-ben
+## 2.example-ben
 ### tensorflow的深入实践：tensorboard使用、cnn、LSTM、goole_net
 b站博主代码实现
 * 第一课 Tensorflow简介，Anaconda安装，Tensorflow的CPU版本安装。
